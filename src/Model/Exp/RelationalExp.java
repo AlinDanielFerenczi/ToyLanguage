@@ -1,6 +1,7 @@
 package Model.Exp;
 
 import Model.ADT.IDictionary;
+import Model.ADT.IHeap;
 import Model.Operator.*;
 import Model.ProgramException;
 import Model.Type.BoolType;
@@ -13,7 +14,7 @@ public class RelationalExp implements IExp{
     private IExp e2;
     private IRelationalOperator op;
 
-    public RelationalExp(IExp firstExp, IExp secondExp, String operator) {
+    public RelationalExp( String operator, IExp firstExp, IExp secondExp) {
         e1 = firstExp;
         e2 = secondExp;
         op = operator.equals("<=") ? new LessEqualOperator()
@@ -25,15 +26,15 @@ public class RelationalExp implements IExp{
                 : null;
     }
 
-    public IValue eval(IDictionary<String,IValue> tbl) throws ProgramException {
+    public IValue eval(IDictionary<String,IValue> tbl, IHeap<IValue> heap) throws ProgramException {
         if(op == null)
             throw new ProgramException("Invalid Operator!");
 
-        IValue resultFirstExp = e1.eval(tbl);
+        IValue resultFirstExp = e1.eval(tbl, heap);
         if(!resultFirstExp.getType().equals(new IntType()))
             throw new ProgramException("First operand is not integer!");
 
-        IValue resultSecondExp = e2.eval(tbl);
+        IValue resultSecondExp = e2.eval(tbl, heap);
         if(!resultSecondExp.getType().equals(new IntType()))
             throw new ProgramException("Second operand is not integer!");
 

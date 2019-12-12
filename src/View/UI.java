@@ -19,7 +19,6 @@ public class UI {
             target = Integer.parseInt(in.nextLine());
             Repository repository = new Repository(new ProgramList<>(),"C:\\Users\\user\\Documents\\");
             if(target != -1) {
-                repository.setTarget(target);
                 executor = new Controller(repository, true);
                 executor.allStep();
             }

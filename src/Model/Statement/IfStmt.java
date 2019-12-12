@@ -29,7 +29,7 @@ public class IfStmt implements IStmt {
     {
         IStack<IStmt> stack = state.getStk();
         IDictionary<String, IValue> symTbl = state.getSymTable();
-        IValue cond = exp.eval(symTbl);
+        IValue cond = exp.eval(symTbl,state.getHeap());
 
         if(!cond.getType().equals(new BoolType()))
             throw new ProgramException("Invalid type for conditional expression!");
@@ -42,6 +42,6 @@ public class IfStmt implements IStmt {
         else
             stack.push(elseS);
 
-        return state;
+        return null;
     }
 }

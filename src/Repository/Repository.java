@@ -1,5 +1,6 @@
 package Repository;
 
+import Model.ADT.IList;
 import Model.ADT.ProgramDictionary;
 import Model.ADT.ProgramList;
 import Model.ADT.ProgramStack;
@@ -23,37 +24,33 @@ import java.util.Date;
 import java.util.Dictionary;
 
 public class Repository implements IRepository{
-    private ProgramList<PrgState> listOfThreads;
-    private int targetProgram;
+    private IList<PrgState> listOfThreads;
     private String logFilePath;
 
-    public Repository(ProgramList<PrgState> programs, String targetFilePath) {
+    public Repository(ProgramList<PrgState> program, String targetFilePath) {
         logFilePath = targetFilePath;
 
-        listOfThreads = programs;
+        listOfThreads = program;
     }
 
-    public PrgState getCrtPrg() {
-        return listOfThreads.current(targetProgram);
-    }
+    public IList<PrgState> getPrgList() { return listOfThreads; }
+
+    public void setPrgList(IList<PrgState> newThreads) { listOfThreads = newThreads; }
 
     public String toString() {
         return "Repository";
     }
 
-    public void setTarget(int programNumber) {
-        targetProgram = programNumber;
-    }
-
-    public void logPrgStateExec() throws ProgramException {
-        PrgState current = listOfThreads.current(targetProgram);
+    public void logPrgStateExec(PrgState current) throws ProgramException {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
         try(PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
-            String response = formatter.format(date)+ ": " +
+            String response = formatter.format(date)+ " Thread "+ current.getId()+": " +
                     "\n Current STMT in Stack: " + current.getStk().toString()+
                     "\n Symbol Table: " + current.getSymTable().toString()+
-                    "\n OutputTable" + current.getOutTable().toString() +
+                    "\n File Table: " + current.getFileTable().toString()+
+                    "\n OutputTable: " + current.getOutTable().toString() +
+                    "\n Heap: " +current.getHeap().toString() +
                     "\n";
             logFile.append(response);
         } catch (IOException exception)

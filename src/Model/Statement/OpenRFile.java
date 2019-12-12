@@ -18,7 +18,7 @@ public class OpenRFile implements IStmt{
 
     public PrgState execute(PrgState state) throws ProgramException {
         IDictionary<String, IValue> tbl = state.getSymTable();
-        IValue result = pathExp.eval(tbl);
+        IValue result = pathExp.eval(tbl,state.getHeap());
 
         if(!result.getType().equals(new StringType()))
             throw new ProgramException("Operator is not a string");
@@ -33,7 +33,11 @@ public class OpenRFile implements IStmt{
             throw new ProgramException("File could not be opened!");
         }
 
-        return state;
+        return null;
+    }
+
+    public BufferedReader getBufferedReader() {
+        return bufferedReader;
     }
 
     public String toString() {

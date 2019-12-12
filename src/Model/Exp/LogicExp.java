@@ -1,6 +1,7 @@
 package Model.Exp;
 
 import Model.ADT.IDictionary;
+import Model.ADT.IHeap;
 import Model.Operator.AndOperator;
 import Model.Operator.ILogicOperator;
 import Model.Operator.OrOperator;
@@ -22,12 +23,12 @@ public class LogicExp implements IExp{
                 : null;
     }
 
-    public IValue eval(IDictionary<String,IValue> tbl) throws ProgramException {
-        IValue resultFirstExp = e1.eval(tbl);
+    public IValue eval(IDictionary<String,IValue> tbl, IHeap<IValue> heap) throws ProgramException {
+        IValue resultFirstExp = e1.eval(tbl, heap);
         if(!resultFirstExp.getType().equals(new BoolType()))
             throw new ProgramException("First operand is not boolean!");
 
-        IValue resultSecondExp = e2.eval(tbl);
+        IValue resultSecondExp = e2.eval(tbl, heap);
         if(!resultSecondExp.getType().equals(new BoolType()))
             throw new ProgramException("Second operand is not boolean!");
 

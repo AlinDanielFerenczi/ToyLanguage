@@ -1,7 +1,9 @@
 package Model.ADT;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 public class ProgramDictionary<K,V> implements IDictionary<K,V>{
     private Map<K,V> dictionary;
@@ -32,10 +34,15 @@ public class ProgramDictionary<K,V> implements IDictionary<K,V>{
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+
         dictionary.keySet().forEach(x-> stringBuilder.append(x.toString())
-                .append(" =")
+                .append("=")
                 .append(dictionary.get(x).toString()));
 
         return stringBuilder.toString();
+    }
+
+    public Map<K,V> getContent() {
+        return dictionary;
     }
 }

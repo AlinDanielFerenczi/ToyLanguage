@@ -26,7 +26,7 @@ public class VarDeclStmt implements IStmt {
         IValue newVariable = type.defaultValue();;
         symTbl.add(id,newVariable);
 
-        return state;
+        return null;
     }
     public String toString() {
         return " ( Declare Variable of Type " + type.toString() + " with Id "+id+" ) ";

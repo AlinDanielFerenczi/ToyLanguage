@@ -6,7 +6,7 @@ import Model.ProgramException;
 public class NopStmt implements IStmt {
     public PrgState execute(PrgState state) throws ProgramException
     {
-        return state;
+        return null;
     }
 
     public NopStmt() {}

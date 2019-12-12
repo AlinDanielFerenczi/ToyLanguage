@@ -1,8 +1,6 @@
 package View;
 
 import Model.Commands.Command;
-import Model.Commands.ExitCommand;
-import Model.ProgramException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,11 +16,12 @@ class TextMenu {
             System.out.println(line);
         }
     }
+    @SuppressWarnings("InfiniteLoopStatement")
     void show() throws Exception{
         Scanner scanner=new Scanner(System.in);
         while(true){
             printMenu();
-            System.out.printf("Input the option: ");
+            System.out.println("Input the option: ");
             String key=scanner.nextLine();
             Command com=commands.get(key);
             if (com==null)

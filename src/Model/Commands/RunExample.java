@@ -11,10 +11,6 @@ public class RunExample extends Command {
     }
     @Override
     public void execute() {
-        try{
-            ctr.allStep(); }
-        catch (ProgramException exception) {
-            System.out.println(exception);
-        } //here you must treat the exceptions that can not be solved in the controller
+        ctr.allStep();
     }
 }

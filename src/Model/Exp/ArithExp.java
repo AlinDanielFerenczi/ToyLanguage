@@ -1,11 +1,15 @@
 package Model.Exp;
 
 import Model.ADT.IDictionary;
+import Model.ADT.IHeap;
 import Model.Operator.*;
 import Model.ProgramException;
 import Model.Type.IntType;
 import Model.Value.IValue;
 import Model.Value.IntValue;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ArithExp implements IExp {
     private IExp e1;
@@ -22,17 +26,17 @@ public class ArithExp implements IExp {
                 : null;
     }
 
-    public IValue eval(IDictionary<String,IValue> tbl) throws ProgramException {
+    public IValue eval(IDictionary<String, IValue> tbl, IHeap<IValue> heap) throws ProgramException {
         if (op == null)
             throw new ProgramException("Invalid Operator!");
 
         IValue v1,v2;
         IntType targetType = new IntType();
 
-        v1= e1.eval(tbl);
+        v1= e1.eval(tbl, heap);
         if (!v1.getType().equals(targetType))
             throw new ProgramException("First operand is not an integer!");
-        v2 = e2.eval(tbl);
+        v2 = e2.eval(tbl, heap);
         if (!v2.getType().equals(targetType))
             throw new ProgramException("Second operand is not an integer!");
 

@@ -20,7 +20,7 @@ public class CloseRFile implements IStmt {
 
     public PrgState execute(PrgState state) throws ProgramException {
         IDictionary<String, IValue> tbl = state.getSymTable();
-        IValue result = pathExp.eval(tbl);
+        IValue result = pathExp.eval(tbl,state.getHeap());
 
         if (!result.getType().equals(new StringType()))
             throw new ProgramException("Operator is not a string");
@@ -37,7 +37,7 @@ public class CloseRFile implements IStmt {
             throw new ProgramException("File could not be closed!");
         }
 
-        return state;
+        return null;
     }
 
     public String toString() {

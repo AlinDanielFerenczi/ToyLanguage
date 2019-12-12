@@ -23,7 +23,7 @@ public class ReadFile implements IStmt{
     }
     public PrgState execute(PrgState state) throws ProgramException {
         IDictionary<String, IValue> tbl = state.getSymTable();
-        IValue pathValue = pathExp.eval(tbl);
+        IValue pathValue = pathExp.eval(tbl, state.getHeap());
         IValue storageValue = tbl.lookup(storage);
 
         if(!pathValue.getType().equals(new StringType()))
@@ -45,7 +45,7 @@ public class ReadFile implements IStmt{
             tbl.add(storage, new IntType().defaultValue());
         }
 
-        return state;
+        return null;
     }
 
     public String toString() {
