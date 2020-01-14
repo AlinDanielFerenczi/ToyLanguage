@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.Screen?>
+
+<GridPane fx:controller="Controller.ProgramViewController"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="center"
+          hgap="200"
+          vgap="200">
+    <VBox spacing="10" alignment="center" GridPane.columnIndex="0" maxHeight="600">
+        <TextField fx:id="selectedIdField"/>
+        <ListView fx:id="prgStateIdentifiers"/>
+        <Button text="Run One Step" onAction="#oneStep"/>
+    </VBox>
+    <VBox spacing="10" alignment="center" GridPane.columnIndex="1" maxHeight="600">
+        <ListView fx:id="fileTable"/>
+        <TableView fx:id="heapTable"/>
+    </VBox>
+    <VBox spacing="10" alignment="center" GridPane.columnIndex="2" maxHeight="600">
+        <ListView fx:id="outTable"/>
+        <ListView fx:id="exeStack"/>
+        <TableView fx:id="symTable"/>
+    </VBox>
+</GridPane>
