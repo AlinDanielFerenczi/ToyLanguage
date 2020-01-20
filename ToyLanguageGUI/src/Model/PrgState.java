@@ -18,7 +18,7 @@ public class PrgState {
     //private IStmt originalProgram; //optional field, but good to have
     public PrgState(IStack<IStmt> stk, IDictionary<String,IValue> symTbl,
              IList<IValue> ot, IDictionary<String, BufferedReader> fileTbl, IHeap<IValue> heapDict, IStmt prg) throws ProgramException {
-        if(heapDict.getContent().keySet().isEmpty()) {
+        if(heapDict.getContent().keySet().isEmpty() && symTbl.getContent().keySet().isEmpty()) {
             ProgramDictionary<String, IType> typeEnv = new ProgramDictionary<String, IType>();
             prg.typecheck(typeEnv);
             try(PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter("typeEnv.txt", true)))) {

@@ -18,7 +18,7 @@ public class WriteHeapExp implements IExp{
         return " ( Writing to "+name+" the value"+expression.toString()+") ";
     }
 
-    public IValue eval(IDictionary<String, IValue> tbl, IHeap<IValue> heap) throws ProgramException {
+    public synchronized IValue eval(IDictionary<String, IValue> tbl, IHeap<IValue> heap) throws ProgramException {
         if(!tbl.isDefined(name))
             throw new ProgramException("Not defined!");
 

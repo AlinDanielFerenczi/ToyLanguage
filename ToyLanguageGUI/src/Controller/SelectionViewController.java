@@ -20,6 +20,8 @@ import Model.Value.IntValue;
 import Model.Value.StringValue;
 import Repository.ProgramRepository;
 import Repository.Repository;
+import com.sun.jdi.Value;
+import javafx.beans.binding.BooleanExpression;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -68,6 +70,8 @@ public class SelectionViewController implements Initializable {
             System.out.println("Log 9 deleted!");
         if(new File("log10.txt").delete())
             System.out.println("Log 10 deleted!");
+        if(new File("log11.txt").delete())
+            System.out.println("Log 11 deleted!");
 
         IStmt ex1 = new CompStmt(new VarDeclStmt("v",
                 new IntType()),
@@ -231,6 +235,7 @@ public class SelectionViewController implements Initializable {
         } catch (ProgramException e) {
             System.out.println(e.toString());
         }
+
         IStmt ex10 = new CompStmt(new VarDeclStmt("v",new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
                         new CompStmt(new VarDeclStmt("a",new RefType(new IntType())),
@@ -250,6 +255,31 @@ public class SelectionViewController implements Initializable {
             Repository repository10 = new Repository(listOfThreads, "log10.txt");
             Controller controller10 = new Controller(repository10, true);
             menu.addCommand(new RunExample("10", ex10.toString(), controller10));
+        } catch (ProgramException e) {
+            System.out.println(e.toString());
+        }
+
+        IStmt ex11 = new CompStmt(new VarDeclStmt("v",new IntType()),
+                new CompStmt(new VarDeclStmt("x", new IntType()),
+                        new CompStmt(new VarDeclStmt("y", new IntType()),
+                                new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(0))),
+                                    new CompStmt(new RepeatStmt(new RelationalExp("==", new VarExp("v"), new ValueExp(new IntValue(3))),
+                                        new CompStmt(new ForkStmt(new CompStmt(new PrintStmt(new VarExp("v")),
+                                                    new AssignStmt("v",new ArithExp('-',new VarExp("v"),new ValueExp(new IntValue(1)))))),
+                                                new AssignStmt("v",new ArithExp('+',new VarExp("v"),new ValueExp(new IntValue(1)))))),
+                                                        new CompStmt(new AssignStmt("x", new ValueExp(new IntValue(1))),
+                                                                new CompStmt(new NopStmt(),
+                                                                        new CompStmt(new AssignStmt("y", new ValueExp(new IntValue(3))),
+                                                                                new CompStmt(new NopStmt(),new PrintStmt(new ArithExp('*',new VarExp("v"),new ValueExp(new IntValue(10)))))))))))));
+
+        try {
+            PrgState prg11 = new PrgState(new ProgramStack<IStmt>(), new ProgramDictionary<String, IValue>(),
+                    new ProgramList<IValue>(), new ProgramDictionary<String, BufferedReader>(), new ProgramHeap<IValue>(), ex11);
+            listOfThreads = new ProgramList<PrgState>();
+            listOfThreads.add(prg11);
+            Repository repository11 = new Repository(listOfThreads, "log11.txt");
+            Controller controller11 = new Controller(repository11, true);
+            menu.addCommand(new RunExample("11", ex11.toString(), controller11));
         } catch (ProgramException e) {
             System.out.println(e.toString());
         }
@@ -297,7 +327,7 @@ public class SelectionViewController implements Initializable {
         Scene newScene = new Scene(root, screenSize.getWidth() * screenRation, screenSize.getHeight() * screenRation);
         stage.setScene(newScene);
         ProgramViewController targetController = (ProgramViewController) loader.getController();
-        RunExample requestedCommand = (RunExample) listOfAvailablePrograms.getCommands().values().toArray()[selectedId-1];
+        RunExample requestedCommand = (RunExample) (listOfAvailablePrograms.getCommands().entrySet().stream().filter(x-> x.getKey().equals(Integer.toString(selectedId))).findFirst()).get().getValue();
         targetController.setTargetProgram(requestedCommand.getCtr());
     }
 }

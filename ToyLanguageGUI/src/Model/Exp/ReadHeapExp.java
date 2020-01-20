@@ -18,7 +18,7 @@ public class ReadHeapExp implements IExp{
         return " ( Reading Heap from"+expression.toString()+") ";
     }
 
-    public IValue eval(IDictionary<String, IValue> tbl, IHeap<IValue> heap) throws ProgramException {
+    public synchronized IValue eval(IDictionary<String, IValue> tbl, IHeap<IValue> heap) throws ProgramException {
         IValue targetValue = expression.eval(tbl, heap);
 
         if(!(targetValue instanceof RefValue))

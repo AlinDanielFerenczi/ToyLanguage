@@ -35,7 +35,9 @@ public class ForkStmt implements IStmt{
     }
 
     public String toString() {
-        return "( ForkStmt )";
+        return "( ForkStmt for "
+                +futureStart.toString()
+                +" )";
     }
 
     public IDictionary<String, IType> typecheck(IDictionary<String,IType> typeEnv) throws ProgramException {
